@@ -1,0 +1,9 @@
+Coisas feitas
+	class RegisterNewProduct >> 6 metodos que recebem de textBox os valores, 1 metodo que conecta/envia para o Db
+
+Coisas a fazer
+	Criar o form de adicionar >> criar os textBox e atribuir suas funções do ResgisterNewProduct >> setar o textBox do ID como textBox.Focus();
+	Criar o form da lista geral de produtos
+	criar o form da lista de saida de produtos
+	No Main	>> botoes para os respectivos form | talvez sistema de login |
+		
