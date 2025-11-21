@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.OleDb;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,11 @@ namespace Gerenciador_De_Estoque
 {
     public class ManageItems
     {
-        string connString = $@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={Application.StartupPath}\EstoquePaiol.accdb;";
+        static string localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+        static string pastaBanco = Path.Combine(localAppData, "GerenciadorDeEstoque");
+        static string dbPath = Path.Combine(pastaBanco, "EstoquePaiol.accdb");
+
+        string connString = $@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={dbPath};";
 
         public Task<bool> ChangeItemName(string newName, string id)
         {

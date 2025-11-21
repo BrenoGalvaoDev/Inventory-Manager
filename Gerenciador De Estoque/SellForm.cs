@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.OleDb;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,29 +14,27 @@ namespace Gerenciador_De_Estoque
 {
     public partial class SellForm : Form
     {
-        string connString = $@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={Application.StartupPath}\EstoquePaiol.accdb;";
+        static string localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+        static string pastaBanco = Path.Combine(localAppData, "GerenciadorDeEstoque");
+        static string dbPath = Path.Combine(pastaBanco, "EstoquePaiol.accdb");
+
+        string connString = $@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={dbPath};";
 
         Product product = new Product();
         PDFGenerator pdfGenerator = new PDFGenerator();
 
         List<Product> productsToRemove = new List<Product>();
 
+        ListViewItem selectedItem; // use to remove item on right click
         public SellForm()
         {
             InitializeComponent();
         }
 
-        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void idTextBox_TextChanged(object sender, EventArgs e)
         {
-            GetProduct(idTextBox.Text, nameTextBox, priceTextBox, systemAmountTextBox);
+            GetProductByID(idTextBox.Text, nameTextBox, priceTextBox, systemAmountTextBox);
         }
-
-
 
         private void SellBtn_Click(object sender, EventArgs e)
         {
@@ -46,15 +45,15 @@ namespace Gerenciador_De_Estoque
         {
             new Main().Show();
             this.Hide();
-
         }
 
         private void AddBtn_Click(object sender, EventArgs e)
         {
             AddProductToList(amountNumericUpDown);
+            idTextBox.Focus();
         }
 
-        public void GetProduct(string value, TextBox nameTB, TextBox priceTB, TextBox systemAmountTB)
+        public void GetProductByID(string value, TextBox nameTB, TextBox priceTB, TextBox systemAmountTB)
         {
             using (OleDbConnection conn = new OleDbConnection(connString))
             {
@@ -76,6 +75,40 @@ namespace Gerenciador_De_Estoque
                                 product.Amount = Convert.ToDecimal(reader["QuantidadeAtual"]);
 
                                 nameTB.Text = product.Name.ToString();
+                                priceTB.Text = product.Value.ToString();
+                                systemAmountTB.Text = product.Amount.ToString();
+                            }
+                        }
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("Produto Não Encontrado");
+                }
+            }
+        }
+        public void GetProductByName(string value, TextBox nameTB, TextBox priceTB, TextBox systemAmountTB)
+        {
+            using (OleDbConnection conn = new OleDbConnection(connString))
+            {
+                try
+                {
+                    conn.Open();
+                    string query = "SELECT CodBarras, Preco, QuantidadeAtual " + "FROM Produtos WHERE Nome = @Nome";
+
+                    using (OleDbCommand cmd = new OleDbCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@CodBarras", value);
+
+                        using (OleDbDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                product.Barcode = reader["CodBarras"].ToString();
+                                product.Value = Convert.ToDecimal(reader["Preco"]);
+                                product.Amount = Convert.ToDecimal(reader["QuantidadeAtual"]);
+
+                                idTextBox.Text = product.Barcode.ToString();
                                 priceTB.Text = product.Value.ToString();
                                 systemAmountTB.Text = product.Amount.ToString();
                             }
@@ -129,6 +162,22 @@ namespace Gerenciador_De_Estoque
         }
         public void RemoveProductToDB()
         {
+            if (string.IsNullOrEmpty(paioleiroTxt.Text) || string.IsNullOrEmpty(recebedorTxt.Text))
+            {
+                MessageBox.Show("Nome do Paioleiro/Recebedor Invalido!");
+                return;
+            }
+            if (comboBox1.SelectedItem == null)
+            {
+                MessageBox.Show("Setor Não Selecionado!");
+                return;
+            }
+
+            if (productsToRemove.Count <= 0)
+            {
+                MessageBox.Show("Quantidade de Itens Invalida!");
+                return;
+            }
             using (OleDbConnection conn = new OleDbConnection(connString))
             {
                 try
@@ -141,7 +190,8 @@ namespace Gerenciador_De_Estoque
                         foreach (var prod in productsToRemove)
                         {
                             cmd.Parameters.Clear();
-                            cmd.Parameters.AddWithValue("@Quantidade", prod.Amount);
+                            var newAmount = cmd.Parameters.Add("@Quantidade", OleDbType.Double);
+                            newAmount.Value = prod.Amount;
                             cmd.Parameters.AddWithValue("@CodBarras", prod.Barcode);
 
                             
@@ -151,7 +201,8 @@ namespace Gerenciador_De_Estoque
                                 MessageBox.Show($"Produto {prod.Name} não tem quantidade suficiente no estoque.");
                             }
                         }
-                        pdfGenerator.GeneratePDFReport(productsToRemove);
+
+                        pdfGenerator.GenerateReport(productsToRemove,comboBox1.SelectedItem.ToString() , paioleiroTxt.Text, recebedorTxt.Text, ReportType.Sales);
                         productsToRemove.Clear();
                         sellListView.Items.Clear();
 
@@ -166,9 +217,59 @@ namespace Gerenciador_De_Estoque
             }
         }
 
-        private void SellForm_Load(object sender, EventArgs e)
+        private void idTextBox_KeyDown(object sender, KeyEventArgs e)
         {
+            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
+            {
+                e.SuppressKeyPress = true;
+                this.SelectNextControl((Control)sender, true, true, true, true);
 
+                GetProductByID(idTextBox.Text, nameTextBox, priceTextBox, systemAmountTextBox);
+            }
         }
+
+        private void amountNumericUpDown_Enter(object sender, EventArgs e)
+        {
+            amountNumericUpDown.Text = "";
+        }
+
+        private void nameTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
+            {
+                e.SuppressKeyPress = true;
+
+                GetProductByName(nameTextBox.Text, nameTextBox, priceTextBox, systemAmountTextBox);
+            }
+        }
+
+        private void sellListView_MouseClick(object sender, MouseEventArgs e)
+        {
+            if(e.Button == MouseButtons.Right)
+            {
+                selectedItem = sellListView.GetItemAt(e.X, e.Y);
+            }
+        }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (selectedItem == null) return;
+
+
+            DialogResult result = MessageBox.Show("Deseja Excluir esse Produto da Lista?", "Confirmação",
+                MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+
+            if (result == DialogResult.OK)
+            {
+                sellListView.Items.Remove(selectedItem);
+                var productToRemove = productsToRemove.FirstOrDefault(p => p.Name == selectedItem.Text && p.Amount.ToString() == selectedItem.SubItems[1].Text);
+                if (productToRemove != null)
+                {
+                    productsToRemove.Remove(productToRemove);
+                }
+
+            }
+        }
+
     }
 }

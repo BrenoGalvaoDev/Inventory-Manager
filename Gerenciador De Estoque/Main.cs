@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.IO;
 
 
 namespace Gerenciador_De_Estoque
@@ -17,13 +18,35 @@ namespace Gerenciador_De_Estoque
         List<Product> lowStockList = new List<Product>();
         List<Product> lowValidateList = new List<Product>();
 
-        string connString = $@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={Application.StartupPath}\EstoquePaiol.accdb;";
+        static string localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+        static string pastaBanco = Path.Combine(localAppData ,"GerenciadorDeEstoque");
+        string dbPath = Path.Combine(pastaBanco, "EstoquePaiol.accdb");
+        
+
+        string connString;
         string query = "SELECT Nome, Validade, EstoqueMinimo, QuantidadeAtual FROM Produtos";
+
+        PDFGenerator generator = new PDFGenerator();
 
         public Main()
         {
             InitializeComponent();
+
+            if (!Directory.Exists(pastaBanco))
+            {
+                Directory.CreateDirectory(pastaBanco);
+            }
+
+            string origemModelo = Path.Combine(Application.StartupPath, "EstoquePaiol.accdb");
+            if (!File.Exists(dbPath))
+            {
+                File.Copy(origemModelo, dbPath);
+            }
+
+            connString = $@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={dbPath};";
+
             LoadProducts();
+
         }
 
         private void Main_Load(object sender, EventArgs e)
@@ -70,8 +93,8 @@ namespace Gerenciador_De_Estoque
                     foreach (Product prod in lowStockList)
                     {
                         ListViewItem item = new ListViewItem(prod.Name);
-                        item.SubItems.Add(prod.minStock.ToString());
-                        item.SubItems.Add(prod.Amount.ToString());
+                        item.SubItems.Add(prod.minStock.ToString("0.#####"));
+                        item.SubItems.Add(prod.Amount.ToString("0.#####"));
                         lowStockListView.Items.Add(item);
                     }
 
@@ -79,7 +102,7 @@ namespace Gerenciador_De_Estoque
                     {
                         ListViewItem item = new ListViewItem(prod.Name);
                         item.SubItems.Add(prod.Validate.ToShortDateString());
-                        item.SubItems.Add(prod.Amount.ToString());
+                        item.SubItems.Add(prod.Amount.ToString("0.#####"));
                         closeToDueDateListView.Items.Add(item);
                     }
                 }
@@ -125,6 +148,31 @@ namespace Gerenciador_De_Estoque
             new SellForm().Show();
             this.Hide();
 
+        }
+
+        private void Main_Load_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void expiringBtn_Click(object sender, EventArgs e)
+        {
+            if (lowValidateList.Count <= 0)
+            {
+                MessageBox.Show("Sem Gêneros Próximos da validade");
+                return;
+            }
+            generator.GenerateReport(lowValidateList, "Produtos Próximos da Validade ", "", "", ReportType.Expiring);
+        }
+
+        private void criticalStockBtn_Click(object sender, EventArgs e)
+        {
+            if (lowStockList.Count <= 0)
+            {
+                MessageBox.Show("Sem Gêneros com estoque Critico");
+                return;
+            }
+            generator.GenerateReport(lowStockList, "Produtos com Estoque Crítico", "", "", ReportType.CriticalStock);
         }
     }
 }

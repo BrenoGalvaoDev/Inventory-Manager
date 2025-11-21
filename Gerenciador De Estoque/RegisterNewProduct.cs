@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.OleDb;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +15,11 @@ namespace Gerenciador_De_Estoque
     {
         Product product = new Product();
 
-        string connString = $@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={Application.StartupPath}\EstoquePaiol.accdb;";
+        static string localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+        static string pastaBanco = Path.Combine(localAppData, "GerenciadorDeEstoque");
+        static string dbPath = Path.Combine(pastaBanco, "EstoquePaiol.accdb");
+
+        string connString = $@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={dbPath};";
 
         public void AddNewProduct()
         {
@@ -21,6 +27,8 @@ namespace Gerenciador_De_Estoque
             {
                 try
                 {
+                    System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("pt-BR");
+
                     conn.Open();
                     string query = "INSERT INTO Produtos (CodBarras, Nome, Preco, Validade, EstoqueMinimo, QuantidadeAtual) " +
                     "VALUES (@CodBarras, @Nome, @Preco, @Validade, @EstoqueMin, @Quantidade)";
@@ -31,8 +39,11 @@ namespace Gerenciador_De_Estoque
                         cmd.Parameters.AddWithValue("@Nome", product.Name);
                         cmd.Parameters.AddWithValue("@Preco", product.Value);
                         cmd.Parameters.AddWithValue("@Validade", product.Validate);
-                        cmd.Parameters.AddWithValue("@EstoqueMin", product.minStock);
-                        cmd.Parameters.AddWithValue("@Quantidade", product.Amount);
+                        var estoqueMinParam = cmd.Parameters.Add("@EstoqueMin", OleDbType.Double);
+                        estoqueMinParam.Value = product.minStock;
+
+                        var quantidadeParam = cmd.Parameters.Add("@Quantidade", OleDbType.Double);
+                        quantidadeParam.Value = product.Amount;
 
                         cmd.ExecuteNonQuery();
 
@@ -65,9 +76,11 @@ namespace Gerenciador_De_Estoque
                                     "WHERE CodBarras = @CodBarras";
                     using (OleDbCommand cmd = new OleDbCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@Quantidade", amount);
-                        cmd.Parameters.AddWithValue("@CodBarras", codBar);
+                        var newAmount = cmd.Parameters.Add("@Quantidade", OleDbType.Double);
+                        newAmount.Value = amount;
 
+                        cmd.Parameters.AddWithValue("@CodBarras", codBar);
+                        
                         int linhasAfetadas = cmd.ExecuteNonQuery();
 
                         if (linhasAfetadas == 0)

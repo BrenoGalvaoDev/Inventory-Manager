@@ -69,54 +69,54 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(12, 47);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(87, 13);
+            this.label1.Size = new System.Drawing.Size(88, 13);
             this.label1.TabIndex = 6;
-            this.label1.Text = "Insert Product ID";
+            this.label1.Text = "Codigo de Barras";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(12, 97);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(104, 13);
+            this.label2.Size = new System.Drawing.Size(90, 13);
             this.label2.TabIndex = 7;
-            this.label2.Text = "Insert Product Name";
+            this.label2.Text = "Nome do Produto";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(12, 149);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(100, 13);
+            this.label3.Size = new System.Drawing.Size(90, 13);
             this.label3.TabIndex = 8;
-            this.label3.Text = "Insert Product Price";
+            this.label3.Text = "Preço do Produto";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(12, 200);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(148, 13);
+            this.label4.Size = new System.Drawing.Size(48, 13);
             this.label4.TabIndex = 9;
-            this.label4.Text = "Insert Product Expiration Date";
+            this.label4.Text = "Validade";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(12, 254);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(148, 13);
+            this.label5.Size = new System.Drawing.Size(82, 13);
             this.label5.TabIndex = 10;
-            this.label5.Text = "Insert Product Minimum Stock";
+            this.label5.Text = "Estoque Minimo";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(12, 307);
+            this.label6.Location = new System.Drawing.Point(12, 318);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(112, 13);
+            this.label6.Size = new System.Drawing.Size(111, 13);
             this.label6.TabIndex = 11;
-            this.label6.Text = "Insert Product Amount";
+            this.label6.Text = "Quantidade Recebida";
             // 
             // confirmBtn
             // 
@@ -150,6 +150,7 @@
             // 
             // minStockNumericUpDown
             // 
+            this.minStockNumericUpDown.DecimalPlaces = 4;
             this.minStockNumericUpDown.Increment = new decimal(new int[] {
             1,
             0,
@@ -165,9 +166,11 @@
             this.minStockNumericUpDown.Size = new System.Drawing.Size(120, 20);
             this.minStockNumericUpDown.TabIndex = 4;
             this.minStockNumericUpDown.ValueChanged += new System.EventHandler(this.minStockNumericUpDown_ValueChanged);
+            this.minStockNumericUpDown.Enter += new System.EventHandler(this.minStockNumericUpDown_Enter);
             // 
             // amountNumericUpDown
             // 
+            this.amountNumericUpDown.DecimalPlaces = 4;
             this.amountNumericUpDown.Increment = new decimal(new int[] {
             1,
             0,
@@ -183,9 +186,11 @@
             this.amountNumericUpDown.Size = new System.Drawing.Size(120, 20);
             this.amountNumericUpDown.TabIndex = 5;
             this.amountNumericUpDown.ValueChanged += new System.EventHandler(this.amountNumericUpDown_ValueChanged);
+            this.amountNumericUpDown.Enter += new System.EventHandler(this.amountNumericUpDown_Enter);
             // 
             // priceNumericUpDown
             // 
+            this.priceNumericUpDown.DecimalPlaces = 4;
             this.priceNumericUpDown.Location = new System.Drawing.Point(15, 165);
             this.priceNumericUpDown.Maximum = new decimal(new int[] {
             10000,
@@ -196,6 +201,7 @@
             this.priceNumericUpDown.Size = new System.Drawing.Size(120, 20);
             this.priceNumericUpDown.TabIndex = 2;
             this.priceNumericUpDown.ValueChanged += new System.EventHandler(this.priceNumericUpDown1_ValueChanged);
+            this.priceNumericUpDown.Enter += new System.EventHandler(this.priceNumericUpDown_Enter);
             // 
             // RegisterForm
             // 

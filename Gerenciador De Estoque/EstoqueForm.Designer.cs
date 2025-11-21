@@ -46,6 +46,7 @@
             this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
             this.excluirProdutoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.backBtn = new System.Windows.Forms.Button();
+            this.fullStockBtn = new System.Windows.Forms.Button();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -141,7 +142,7 @@
             // 
             // backBtn
             // 
-            this.backBtn.Location = new System.Drawing.Point(1210, 668);
+            this.backBtn.Location = new System.Drawing.Point(1144, 640);
             this.backBtn.Name = "backBtn";
             this.backBtn.Size = new System.Drawing.Size(128, 49);
             this.backBtn.TabIndex = 1;
@@ -149,12 +150,23 @@
             this.backBtn.UseVisualStyleBackColor = true;
             this.backBtn.Click += new System.EventHandler(this.backBtn_Click);
             // 
+            // fullStockBtn
+            // 
+            this.fullStockBtn.Location = new System.Drawing.Point(849, 651);
+            this.fullStockBtn.Name = "fullStockBtn";
+            this.fullStockBtn.Size = new System.Drawing.Size(195, 37);
+            this.fullStockBtn.TabIndex = 2;
+            this.fullStockBtn.Text = "Gerar Relaório";
+            this.fullStockBtn.UseVisualStyleBackColor = true;
+            this.fullStockBtn.Click += new System.EventHandler(this.fullStockBtn_Click);
+            // 
             // EstoqueForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.PaleGreen;
-            this.ClientSize = new System.Drawing.Size(1350, 729);
+            this.ClientSize = new System.Drawing.Size(1284, 701);
+            this.Controls.Add(this.fullStockBtn);
             this.Controls.Add(this.backBtn);
             this.Controls.Add(this.stockListView);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -179,5 +191,6 @@
         private System.Windows.Forms.ToolStripMenuItem renomearToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem excluirProdutoToolStripMenuItem;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBox1;
+        private System.Windows.Forms.Button fullStockBtn;
     }
 }

@@ -72,12 +72,28 @@ namespace Gerenciador_De_Estoque
             dateTimePicker.Value = DateTime.Now;
             amountNumericUpDown.Value = 0;
             minStockNumericUpDown.Value = 0;
+            idTextBox.Focus();
         }
 
         private void backBtn_Click(object sender, EventArgs e)
         {
             new Main().Show();
             this.Hide();
+        }
+
+        private void priceNumericUpDown_Enter(object sender, EventArgs e)
+        {
+            priceNumericUpDown.Text = "";
+        }
+
+        private void minStockNumericUpDown_Enter(object sender, EventArgs e)
+        {
+            minStockNumericUpDown.Text = "";
+        }
+
+        private void amountNumericUpDown_Enter(object sender, EventArgs e)
+        {
+            amountNumericUpDown.Text = "";
         }
     }
 }

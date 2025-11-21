@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.OleDb;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -15,12 +16,18 @@ namespace Gerenciador_De_Estoque
 {
     public partial class EstoqueForm : Form
     {
-        string connString = $@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={Application.StartupPath}\EstoquePaiol.accdb;";
+        static string localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+        static string pastaBanco = Path.Combine(localAppData, "GerenciadorDeEstoque");
+        static string dbPath = Path.Combine(pastaBanco, "EstoquePaiol.accdb");
+
+        string connString = $@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={dbPath};";
         string query = "SELECT CodBarras, Nome, Validade, EstoqueMinimo, QuantidadeAtual FROM Produtos";
 
         List<Product> products = new List<Product>();
 
         ManageItems manageItems = new ManageItems();
+
+        PDFGenerator generator = new PDFGenerator();
 
         int itemIndex;
 
@@ -102,8 +109,8 @@ namespace Gerenciador_De_Estoque
 
                                 item.SubItems.Add(prod.Name);
                                 item.SubItems.Add(prod.Validate.ToShortDateString());
-                                item.SubItems.Add(prod.minStock.ToString());
-                                item.SubItems.Add(prod.Amount.ToString());
+                                item.SubItems.Add(prod.minStock.ToString("0.#####"));
+                                item.SubItems.Add(prod.Amount.ToString("0.#####"));
 
                                 stockListView.Items.Add(item);
                             }
@@ -159,5 +166,10 @@ namespace Gerenciador_De_Estoque
         }
 
         #endregion
+
+        private void fullStockBtn_Click(object sender, EventArgs e)
+        {
+            generator.GenerateReport(products, " ", " ", "Full Stock", ReportType.FullStock);
+        }
     }
 }
