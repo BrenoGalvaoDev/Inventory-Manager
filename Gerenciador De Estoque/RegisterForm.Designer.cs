@@ -43,6 +43,8 @@
             this.minStockNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.amountNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.priceNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.label7 = new System.Windows.Forms.Label();
+            this.ufTextBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.minStockNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.amountNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.priceNumericUpDown)).BeginInit();
@@ -85,7 +87,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 149);
+            this.label3.Location = new System.Drawing.Point(12, 201);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(90, 13);
             this.label3.TabIndex = 8;
@@ -94,7 +96,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 200);
+            this.label4.Location = new System.Drawing.Point(12, 252);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(48, 13);
             this.label4.TabIndex = 9;
@@ -103,7 +105,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 254);
+            this.label5.Location = new System.Drawing.Point(12, 306);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(82, 13);
             this.label5.TabIndex = 10;
@@ -112,7 +114,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(12, 318);
+            this.label6.Location = new System.Drawing.Point(12, 370);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(111, 13);
             this.label6.TabIndex = 11;
@@ -120,10 +122,10 @@
             // 
             // confirmBtn
             // 
-            this.confirmBtn.Location = new System.Drawing.Point(41, 421);
+            this.confirmBtn.Location = new System.Drawing.Point(29, 493);
             this.confirmBtn.Name = "confirmBtn";
             this.confirmBtn.Size = new System.Drawing.Size(94, 46);
-            this.confirmBtn.TabIndex = 6;
+            this.confirmBtn.TabIndex = 7;
             this.confirmBtn.Text = "Confirm";
             this.confirmBtn.UseVisualStyleBackColor = true;
             this.confirmBtn.Click += new System.EventHandler(this.confirmBtn_Click);
@@ -133,19 +135,19 @@
             this.backBtn.Location = new System.Drawing.Point(41, 634);
             this.backBtn.Name = "backBtn";
             this.backBtn.Size = new System.Drawing.Size(75, 23);
-            this.backBtn.TabIndex = 7;
-            this.backBtn.Text = "Back";
+            this.backBtn.TabIndex = 8;
+            this.backBtn.Text = "Voltar";
             this.backBtn.UseVisualStyleBackColor = true;
             this.backBtn.Click += new System.EventHandler(this.backBtn_Click);
             // 
             // dateTimePicker
             // 
             this.dateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePicker.Location = new System.Drawing.Point(12, 216);
+            this.dateTimePicker.Location = new System.Drawing.Point(12, 268);
             this.dateTimePicker.MinDate = new System.DateTime(1990, 1, 1, 0, 0, 0, 0);
             this.dateTimePicker.Name = "dateTimePicker";
             this.dateTimePicker.Size = new System.Drawing.Size(170, 20);
-            this.dateTimePicker.TabIndex = 3;
+            this.dateTimePicker.TabIndex = 4;
             this.dateTimePicker.ValueChanged += new System.EventHandler(this.dateTimePicker_ValueChanged);
             // 
             // minStockNumericUpDown
@@ -156,15 +158,15 @@
             0,
             0,
             65536});
-            this.minStockNumericUpDown.Location = new System.Drawing.Point(15, 270);
+            this.minStockNumericUpDown.Location = new System.Drawing.Point(15, 322);
             this.minStockNumericUpDown.Maximum = new decimal(new int[] {
-            10000,
+            100000,
             0,
             0,
             0});
             this.minStockNumericUpDown.Name = "minStockNumericUpDown";
             this.minStockNumericUpDown.Size = new System.Drawing.Size(120, 20);
-            this.minStockNumericUpDown.TabIndex = 4;
+            this.minStockNumericUpDown.TabIndex = 5;
             this.minStockNumericUpDown.ValueChanged += new System.EventHandler(this.minStockNumericUpDown_ValueChanged);
             this.minStockNumericUpDown.Enter += new System.EventHandler(this.minStockNumericUpDown_Enter);
             // 
@@ -176,32 +178,50 @@
             0,
             0,
             65536});
-            this.amountNumericUpDown.Location = new System.Drawing.Point(15, 334);
+            this.amountNumericUpDown.Location = new System.Drawing.Point(15, 386);
             this.amountNumericUpDown.Maximum = new decimal(new int[] {
-            10000,
+            1000000,
             0,
             0,
             0});
             this.amountNumericUpDown.Name = "amountNumericUpDown";
             this.amountNumericUpDown.Size = new System.Drawing.Size(120, 20);
-            this.amountNumericUpDown.TabIndex = 5;
+            this.amountNumericUpDown.TabIndex = 6;
             this.amountNumericUpDown.ValueChanged += new System.EventHandler(this.amountNumericUpDown_ValueChanged);
             this.amountNumericUpDown.Enter += new System.EventHandler(this.amountNumericUpDown_Enter);
             // 
             // priceNumericUpDown
             // 
             this.priceNumericUpDown.DecimalPlaces = 4;
-            this.priceNumericUpDown.Location = new System.Drawing.Point(15, 165);
+            this.priceNumericUpDown.Location = new System.Drawing.Point(15, 217);
             this.priceNumericUpDown.Maximum = new decimal(new int[] {
-            10000,
+            100000,
             0,
             0,
             0});
             this.priceNumericUpDown.Name = "priceNumericUpDown";
             this.priceNumericUpDown.Size = new System.Drawing.Size(120, 20);
-            this.priceNumericUpDown.TabIndex = 2;
+            this.priceNumericUpDown.TabIndex = 3;
             this.priceNumericUpDown.ValueChanged += new System.EventHandler(this.priceNumericUpDown1_ValueChanged);
             this.priceNumericUpDown.Enter += new System.EventHandler(this.priceNumericUpDown_Enter);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(12, 147);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(21, 13);
+            this.label7.TabIndex = 13;
+            this.label7.Text = "UF";
+            // 
+            // ufTextBox
+            // 
+            this.ufTextBox.Location = new System.Drawing.Point(12, 163);
+            this.ufTextBox.MaxLength = 2;
+            this.ufTextBox.Name = "ufTextBox";
+            this.ufTextBox.Size = new System.Drawing.Size(48, 20);
+            this.ufTextBox.TabIndex = 2;
+            this.ufTextBox.TextChanged += new System.EventHandler(this.ufTextBox_TextChanged);
             // 
             // RegisterForm
             // 
@@ -209,6 +229,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightGreen;
             this.ClientSize = new System.Drawing.Size(1350, 729);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.ufTextBox);
             this.Controls.Add(this.priceNumericUpDown);
             this.Controls.Add(this.amountNumericUpDown);
             this.Controls.Add(this.minStockNumericUpDown);
@@ -251,5 +273,7 @@
         private System.Windows.Forms.NumericUpDown minStockNumericUpDown;
         private System.Windows.Forms.NumericUpDown amountNumericUpDown;
         private System.Windows.Forms.NumericUpDown priceNumericUpDown;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox ufTextBox;
     }
 }

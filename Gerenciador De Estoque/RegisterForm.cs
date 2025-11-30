@@ -58,6 +58,11 @@ namespace Gerenciador_De_Estoque
             decimal value = amountNumericUpDown.Value;
             registerNewProduct.ChangeAmount(value);
         }
+        private void ufTextBox_TextChanged(object sender, EventArgs e)
+        {
+            string value = ufTextBox.Text;
+            registerNewProduct.ChangeUF(value);
+        }
 
         private void confirmBtn_Click(object sender, EventArgs e)
         {
@@ -68,6 +73,7 @@ namespace Gerenciador_De_Estoque
 
             idTextBox.Clear();
             nameTextBox.Clear();
+            ufTextBox.Clear();
             priceNumericUpDown.Value = 0;
             dateTimePicker.Value = DateTime.Now;
             amountNumericUpDown.Value = 0;

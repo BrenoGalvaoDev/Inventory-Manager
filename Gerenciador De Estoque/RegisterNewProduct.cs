@@ -30,15 +30,20 @@ namespace Gerenciador_De_Estoque
                     System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("pt-BR");
 
                     conn.Open();
-                    string query = "INSERT INTO Produtos (CodBarras, Nome, Preco, Validade, EstoqueMinimo, QuantidadeAtual) " +
-                    "VALUES (@CodBarras, @Nome, @Preco, @Validade, @EstoqueMin, @Quantidade)";
+                    string query = "INSERT INTO Produtos (CodBarras, Nome, UF, Preco, Validade, EstoqueMinimo, QuantidadeAtual) " +
+                                   "VALUES (@CodBarras, @Nome, @UF, @Preco, @Validade, @EstoqueMin, @Quantidade)";
 
                     using (OleDbCommand cmd = new OleDbCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@CodBarras", product.Barcode);
                         cmd.Parameters.AddWithValue("@Nome", product.Name);
-                        cmd.Parameters.AddWithValue("@Preco", product.Value);
+                        cmd.Parameters.AddWithValue("@UF", product.UF);
+
+                        var valorParam = cmd.Parameters.Add("@Preco", OleDbType.Currency);
+                        valorParam.Value = product.Value;
+
                         cmd.Parameters.AddWithValue("@Validade", product.Validate);
+
                         var estoqueMinParam = cmd.Parameters.Add("@EstoqueMin", OleDbType.Double);
                         estoqueMinParam.Value = product.minStock;
 
@@ -177,6 +182,11 @@ namespace Gerenciador_De_Estoque
         public void ChangeAmount(decimal value)
         {
             if (value > 0) product.Amount = value;
+        }
+
+        public void ChangeUF(string value)
+        {
+            if (value != string.Empty) product.UF = value;
         }
     }
 }

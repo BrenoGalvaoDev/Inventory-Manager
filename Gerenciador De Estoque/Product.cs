@@ -10,6 +10,7 @@ namespace Gerenciador_De_Estoque
     {
         public string Barcode { get; set; }
         public string Name { get; set; }
+        public string UF { get; set; }
         public decimal Value { get; set; }
         public DateTime Validate { get; set; }
         public decimal minStock { get; set; }

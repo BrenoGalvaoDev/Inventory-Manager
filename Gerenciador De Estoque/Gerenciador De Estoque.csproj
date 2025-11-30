@@ -184,6 +184,12 @@
     <Compile Include="EstoqueForm.Designer.cs">
       <DependentUpon>EstoqueForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="EditItemForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditItemForm.Designer.cs">
+      <DependentUpon>EditItemForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ManageItems.cs" />
     <Compile Include="PDFGenerator.cs" />
     <Compile Include="RegisterForm.cs">
@@ -210,6 +216,9 @@
     </Compile>
     <EmbeddedResource Include="EstoqueForm.resx">
       <DependentUpon>EstoqueForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditItemForm.resx">
+      <DependentUpon>EditItemForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>

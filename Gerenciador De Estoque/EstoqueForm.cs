@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static Org.BouncyCastle.Crypto.Digests.SkeinEngine;
@@ -21,7 +23,8 @@ namespace Gerenciador_De_Estoque
         static string dbPath = Path.Combine(pastaBanco, "EstoquePaiol.accdb");
 
         string connString = $@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={dbPath};";
-        string query = "SELECT CodBarras, Nome, Validade, EstoqueMinimo, QuantidadeAtual FROM Produtos";
+        string query = "SELECT CodBarras, Nome, UF, Preco, Validade, EstoqueMinimo, QuantidadeAtual FROM Produtos";
+
 
         List<Product> products = new List<Product>();
 
@@ -31,8 +34,17 @@ namespace Gerenciador_De_Estoque
 
         int itemIndex;
 
+        public static EstoqueForm instance;
+
         public EstoqueForm()
         {
+            instance = this;
+
+            CultureInfo culture = new CultureInfo("pt-BR");
+            Thread.CurrentThread.CurrentCulture = culture;
+            Thread.CurrentThread.CurrentUICulture = culture;
+
+
             InitializeComponent();
             LoadProducts();
         }
@@ -96,6 +108,8 @@ namespace Gerenciador_De_Estoque
 
                                 newProduct.Barcode  = reader["CodBarras"].ToString();
                                 newProduct.Name     = reader["Nome"].ToString();
+                                newProduct.UF       = reader["UF"].ToString();
+                                newProduct.Value    = Convert.ToDecimal(reader["Preco"]);
                                 newProduct.Validate = Convert.ToDateTime(reader["Validade"]);
                                 newProduct.minStock = Convert.ToDecimal(reader["EstoqueMinimo"]);
                                 newProduct.Amount   = Convert.ToDecimal(reader["QuantidadeAtual"]);
@@ -108,6 +122,8 @@ namespace Gerenciador_De_Estoque
                                 ListViewItem item = new ListViewItem(prod.Barcode);
 
                                 item.SubItems.Add(prod.Name);
+                                item.SubItems.Add(prod.UF);
+                                item.SubItems.Add(prod.Value.ToString());
                                 item.SubItems.Add(prod.Validate.ToShortDateString());
                                 item.SubItems.Add(prod.minStock.ToString("0.#####"));
                                 item.SubItems.Add(prod.Amount.ToString("0.#####"));
@@ -165,11 +181,25 @@ namespace Gerenciador_De_Estoque
             }
         }
 
+        public void EditItem()
+        {
+            EditItemForm editItemForm = new EditItemForm();
+            Product prod = products[itemIndex];
+            editItemForm.LoadProductData(prod);
+            editItemForm.FormClosed += (s, args) => LoadProducts();
+            editItemForm.ShowDialog();
+        }
+
         #endregion
 
         private void fullStockBtn_Click(object sender, EventArgs e)
         {
             generator.GenerateReport(products, " ", " ", "Full Stock", ReportType.FullStock);
+        }
+
+        private void editarItemToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EditItem();
         }
     }
 }

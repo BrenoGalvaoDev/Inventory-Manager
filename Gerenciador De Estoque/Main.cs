@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.OleDb;
 using System.Drawing;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.OleDb;
-using System.IO;
 
 
 namespace Gerenciador_De_Estoque
@@ -24,12 +26,17 @@ namespace Gerenciador_De_Estoque
         
 
         string connString;
-        string query = "SELECT Nome, Validade, EstoqueMinimo, QuantidadeAtual FROM Produtos";
+        string query = "SELECT Nome, UF, Preco, Validade, EstoqueMinimo, QuantidadeAtual FROM Produtos";
 
         PDFGenerator generator = new PDFGenerator();
 
         public Main()
         {
+
+            CultureInfo culture = new CultureInfo("pt-BR");
+            Thread.CurrentThread.CurrentCulture = culture;
+            Thread.CurrentThread.CurrentUICulture = culture;
+
             InitializeComponent();
 
             if (!Directory.Exists(pastaBanco))
@@ -44,6 +51,8 @@ namespace Gerenciador_De_Estoque
             }
 
             connString = $@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={dbPath};";
+
+            EnsureColumnExists();
 
             LoadProducts();
 
@@ -80,11 +89,13 @@ namespace Gerenciador_De_Estoque
                                 Product product = new Product();
 
                                 product.Name = reader["Nome"].ToString();
+                                product.UF = reader["UF"].ToString();
+                                product.Value = Convert.ToDecimal(reader["Preco"]);
                                 product.Validate = Convert.ToDateTime(reader["Validade"]);
                                 product.minStock = Convert.ToDecimal(reader["EstoqueMinimo"]);
                                 product.Amount = Convert.ToDecimal(reader["QuantidadeAtual"]);
 
-                                if(MinStock(product.Amount, product.minStock) && product.Amount > 0) lowStockList.Add(product);
+                                if (MinStock(product.Amount, product.minStock) && product.Amount > 0) lowStockList.Add(product);
                                 if (CloseToDueDate(product.Validate, 60) && product.Amount > 0) lowValidateList.Add(product);
                             }
                         }
@@ -93,6 +104,8 @@ namespace Gerenciador_De_Estoque
                     foreach (Product prod in lowStockList)
                     {
                         ListViewItem item = new ListViewItem(prod.Name);
+                        item.SubItems.Add(prod.UF);
+                        item.SubItems.Add(prod.Value.ToString());
                         item.SubItems.Add(prod.minStock.ToString("0.#####"));
                         item.SubItems.Add(prod.Amount.ToString("0.#####"));
                         lowStockListView.Items.Add(item);
@@ -101,6 +114,8 @@ namespace Gerenciador_De_Estoque
                     foreach (Product prod in lowValidateList)
                     {
                         ListViewItem item = new ListViewItem(prod.Name);
+                        item.SubItems.Add(prod.UF);
+                        item.SubItems.Add(prod.Value.ToString());
                         item.SubItems.Add(prod.Validate.ToShortDateString());
                         item.SubItems.Add(prod.Amount.ToString("0.#####"));
                         closeToDueDateListView.Items.Add(item);
@@ -117,6 +132,49 @@ namespace Gerenciador_De_Estoque
                         conn.Close();
                     }
                 }
+            }
+        }
+
+        public void EnsureColumnExists()
+        {
+            try
+            {
+                using (var conn = new OleDbConnection(connString))
+                {
+                    conn.Open();
+
+                    DataTable schemaTable = conn.GetOleDbSchemaTable(
+                        OleDbSchemaGuid.Columns,
+                        new object[] { null, null, "Produtos", null }
+                    );
+
+                    bool columnExists = false;
+                    if (schemaTable != null)
+                    {
+                        columnExists = schemaTable.Rows
+                            .Cast<DataRow>()
+                            .Any(row => string.Equals(
+                                row["COLUMN_NAME"].ToString(),
+                                "UF",
+                                StringComparison.OrdinalIgnoreCase));
+                    }
+
+                    if (!columnExists)
+                    {
+                        using (var cmd = new OleDbCommand("ALTER TABLE [Produtos] ADD COLUMN [UF] TEXT(2);", conn))
+                        {
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+            }
+            catch (OleDbException ex)
+            {
+                MessageBox.Show($"Erro ao garantir coluna UF: {ex.Message}", "Erro de Banco", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro inesperado: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

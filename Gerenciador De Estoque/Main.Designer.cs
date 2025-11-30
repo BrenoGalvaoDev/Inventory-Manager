@@ -48,6 +48,10 @@
             this.sellFormBtn = new System.Windows.Forms.Button();
             this.expiringBtn = new System.Windows.Forms.Button();
             this.criticalStockBtn = new System.Windows.Forms.Button();
+            this._UF = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this._Preço = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.UF = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Preço = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // openRegisterBtn
@@ -65,6 +69,8 @@
             // 
             this.closeToDueDateListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.Nome,
+            this.UF,
+            this.Preço,
             this.Validade,
             this.Quantidade});
             this.closeToDueDateListView.FullRowSelect = true;
@@ -79,16 +85,18 @@
             // Nome
             // 
             this.Nome.Text = "Nome";
-            this.Nome.Width = 563;
+            this.Nome.Width = 440;
             // 
             // Validade
             // 
+            this.Validade.DisplayIndex = 2;
             this.Validade.Text = "Validade";
             this.Validade.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.Validade.Width = 87;
             // 
             // Quantidade
             // 
+            this.Quantidade.DisplayIndex = 3;
             this.Quantidade.Text = "Quantidade";
             this.Quantidade.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.Quantidade.Width = 100;
@@ -98,6 +106,8 @@
             this.lowStockListView.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lowStockListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this._Name,
+            this._UF,
+            this._Preço,
             this.StockMin,
             this.Amount});
             this.lowStockListView.FullRowSelect = true;
@@ -116,7 +126,7 @@
             // _Name
             // 
             this._Name.Text = "Nome";
-            this._Name.Width = 566;
+            this._Name.Width = 442;
             // 
             // StockMin
             // 
@@ -155,7 +165,7 @@
             this.exitBtn.Name = "exitBtn";
             this.exitBtn.Size = new System.Drawing.Size(86, 45);
             this.exitBtn.TabIndex = 5;
-            this.exitBtn.Text = "Exit";
+            this.exitBtn.Text = "Sair";
             this.exitBtn.UseVisualStyleBackColor = true;
             this.exitBtn.Click += new System.EventHandler(this.exitBtn_Click);
             // 
@@ -201,6 +211,27 @@
             this.criticalStockBtn.UseVisualStyleBackColor = true;
             this.criticalStockBtn.Click += new System.EventHandler(this.criticalStockBtn_Click);
             // 
+            // _UF
+            // 
+            this._UF.Text = "UF";
+            this._UF.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // _Preço
+            // 
+            this._Preço.Text = "Preço";
+            this._Preço.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // UF
+            // 
+            this.UF.Text = "UF";
+            this.UF.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // Preço
+            // 
+            this.Preço.DisplayIndex = 4;
+            this.Preço.Text = "Preço";
+            this.Preço.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // Main
             // 
             this.BackColor = System.Drawing.Color.PaleGreen;
@@ -245,6 +276,10 @@
         private System.Windows.Forms.Button sellFormBtn;
         private System.Windows.Forms.Button expiringBtn;
         private System.Windows.Forms.Button criticalStockBtn;
+        private System.Windows.Forms.ColumnHeader UF;
+        private System.Windows.Forms.ColumnHeader Preço;
+        private System.Windows.Forms.ColumnHeader _UF;
+        private System.Windows.Forms.ColumnHeader _Preço;
     }
 }
 

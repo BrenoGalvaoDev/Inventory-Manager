@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows.Forms;
 using MigraDoc.DocumentObjectModel;
 using MigraDoc.DocumentObjectModel.Tables;
@@ -17,7 +18,6 @@ namespace Gerenciador_De_Estoque
 
     public class PDFGenerator
     {
-        // Agora recebe setor, paioleiro e recebedor
         public void GenerateReport(List<Product> products, string sector, string paioleiro, string recebedor, ReportType type)
         {
             using (SaveFileDialog saveFileDialog = new SaveFileDialog())
@@ -129,7 +129,35 @@ namespace Gerenciador_De_Estoque
                         renderer.PdfDocument.Save(saveFileDialog.FileName);
 
                         MessageBox.Show("Relatório gerado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
+
+                        // Abrir PDF gerado automaticamente
+                        try
+                        {
+                            var psi = new ProcessStartInfo(saveFileDialog.FileName)
+                            {
+                                UseShellExecute = true
+                            };
+                            Process.Start(psi);
+                        }
+                        catch (Exception exOpen)
+                        {
+                            MessageBox.Show("Não foi possível abrir o PDF automaticamente: " + exOpen.Message, "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+
+                        // Abrir PDF gerado automaticamente
+                        try
+                        {
+                            var psi = new ProcessStartInfo(saveFileDialog.FileName)
+                            {
+                                UseShellExecute = true
+                            };
+                            Process.Start(psi);
+                        }
+                        catch (Exception exOpen)
+                        {
+                            MessageBox.Show("Não foi possível abrir o PDF automaticamente: " + exOpen.Message, "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                        }
                     catch (Exception ex)
                     {
                         MessageBox.Show("Erro ao gerar PDF: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);

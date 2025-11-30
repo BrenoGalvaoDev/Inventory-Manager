@@ -54,6 +54,7 @@
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
+            this.ufTB = new System.Windows.Forms.TextBox();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.amountNumericUpDown)).BeginInit();
             this.SuspendLayout();
@@ -174,7 +175,7 @@
             65536});
             this.amountNumericUpDown.Location = new System.Drawing.Point(24, 266);
             this.amountNumericUpDown.Maximum = new decimal(new int[] {
-            100000,
+            10000000,
             0,
             0,
             0});
@@ -287,12 +288,23 @@
             this.label8.TabIndex = 21;
             this.label8.Text = "Setor";
             // 
+            // ufTB
+            // 
+            this.ufTB.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.ufTB.Location = new System.Drawing.Point(298, 119);
+            this.ufTB.Name = "ufTB";
+            this.ufTB.ReadOnly = true;
+            this.ufTB.Size = new System.Drawing.Size(32, 20);
+            this.ufTB.TabIndex = 22;
+            this.ufTB.TabStop = false;
+            // 
             // SellForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.PaleGreen;
             this.ClientSize = new System.Drawing.Size(1284, 701);
+            this.Controls.Add(this.ufTB);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.label7);
@@ -350,5 +362,6 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.TextBox ufTB;
     }
 }

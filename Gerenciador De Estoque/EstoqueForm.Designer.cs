@@ -47,6 +47,9 @@
             this.excluirProdutoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.backBtn = new System.Windows.Forms.Button();
             this.fullStockBtn = new System.Windows.Forms.Button();
+            this.UF = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.editarItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.PREÇO = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -55,6 +58,8 @@
             this.stockListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.ID,
             this.NOME,
+            this.UF,
+            this.PREÇO,
             this.VALIDADE,
             this.ESTOQUE_MINIMO,
             this.QUANTIDADE_ATUAL});
@@ -73,9 +78,9 @@
             listViewItem3,
             listViewItem4,
             listViewItem5});
-            this.stockListView.Location = new System.Drawing.Point(129, 12);
+            this.stockListView.Location = new System.Drawing.Point(28, 12);
             this.stockListView.Name = "stockListView";
-            this.stockListView.Size = new System.Drawing.Size(1127, 603);
+            this.stockListView.Size = new System.Drawing.Size(1244, 603);
             this.stockListView.TabIndex = 0;
             this.stockListView.UseCompatibleStateImageBehavior = false;
             this.stockListView.View = System.Windows.Forms.View.Details;
@@ -90,7 +95,7 @@
             // 
             this.NOME.Text = "NOME";
             this.NOME.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.NOME.Width = 658;
+            this.NOME.Width = 622;
             // 
             // VALIDADE
             // 
@@ -114,9 +119,10 @@
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.renomearToolStripMenuItem,
-            this.excluirProdutoToolStripMenuItem});
+            this.excluirProdutoToolStripMenuItem,
+            this.editarItemToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(175, 48);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(175, 70);
             // 
             // renomearToolStripMenuItem
             // 
@@ -160,6 +166,24 @@
             this.fullStockBtn.UseVisualStyleBackColor = true;
             this.fullStockBtn.Click += new System.EventHandler(this.fullStockBtn_Click);
             // 
+            // UF
+            // 
+            this.UF.Text = "UF";
+            this.UF.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // editarItemToolStripMenuItem
+            // 
+            this.editarItemToolStripMenuItem.Name = "editarItemToolStripMenuItem";
+            this.editarItemToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.editarItemToolStripMenuItem.Text = "Editar Item";
+            this.editarItemToolStripMenuItem.Click += new System.EventHandler(this.editarItemToolStripMenuItem_Click);
+            // 
+            // PREÇO
+            // 
+            this.PREÇO.Text = "PREÇO";
+            this.PREÇO.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.PREÇO.Width = 92;
+            // 
             // EstoqueForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -192,5 +216,8 @@
         private System.Windows.Forms.ToolStripMenuItem excluirProdutoToolStripMenuItem;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBox1;
         private System.Windows.Forms.Button fullStockBtn;
+        private System.Windows.Forms.ColumnHeader UF;
+        private System.Windows.Forms.ToolStripMenuItem editarItemToolStripMenuItem;
+        private System.Windows.Forms.ColumnHeader PREÇO;
     }
 }

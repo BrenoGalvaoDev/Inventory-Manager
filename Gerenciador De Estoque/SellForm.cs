@@ -60,7 +60,7 @@ namespace Gerenciador_De_Estoque
                 try
                 {
                     conn.Open();
-                    string query = "SELECT Nome, Preco, QuantidadeAtual " + "FROM Produtos WHERE CodBarras = @CodBarras";
+                    string query = "SELECT Nome, UF, Preco, QuantidadeAtual " + "FROM Produtos WHERE CodBarras = @CodBarras";
 
                     using (OleDbCommand cmd = new OleDbCommand(query, conn))
                     {
@@ -71,12 +71,14 @@ namespace Gerenciador_De_Estoque
                             if (reader.Read())
                             {
                                 product.Name = reader["Nome"].ToString();
+                                product.UF = reader["UF"].ToString();
                                 product.Value = Convert.ToDecimal(reader["Preco"]);
                                 product.Amount = Convert.ToDecimal(reader["QuantidadeAtual"]);
 
                                 nameTB.Text = product.Name.ToString();
                                 priceTB.Text = product.Value.ToString();
                                 systemAmountTB.Text = product.Amount.ToString();
+                                ufTB.Text = product.UF.ToString();
                             }
                         }
                     }
@@ -94,7 +96,7 @@ namespace Gerenciador_De_Estoque
                 try
                 {
                     conn.Open();
-                    string query = "SELECT CodBarras, Preco, QuantidadeAtual " + "FROM Produtos WHERE Nome = @Nome";
+                    string query = "SELECT CodBarras, UF, Preco, QuantidadeAtual " + "FROM Produtos WHERE Nome = @Nome";
 
                     using (OleDbCommand cmd = new OleDbCommand(query, conn))
                     {
@@ -105,12 +107,14 @@ namespace Gerenciador_De_Estoque
                             if (reader.Read())
                             {
                                 product.Barcode = reader["CodBarras"].ToString();
+                                product.UF = reader["UF"].ToString();
                                 product.Value = Convert.ToDecimal(reader["Preco"]);
                                 product.Amount = Convert.ToDecimal(reader["QuantidadeAtual"]);
 
                                 idTextBox.Text = product.Barcode.ToString();
                                 priceTB.Text = product.Value.ToString();
                                 systemAmountTB.Text = product.Amount.ToString();
+                                ufTB.Text = product.UF.ToString();
                             }
                         }
                     }
