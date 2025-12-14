@@ -35,10 +35,14 @@
             this.openRegisterBtn = new System.Windows.Forms.Button();
             this.closeToDueDateListView = new System.Windows.Forms.ListView();
             this.Nome = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.UF = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Preço = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Validade = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Quantidade = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lowStockListView = new System.Windows.Forms.ListView();
             this._Name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this._UF = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this._Preço = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.StockMin = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Amount = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label1 = new System.Windows.Forms.Label();
@@ -48,10 +52,7 @@
             this.sellFormBtn = new System.Windows.Forms.Button();
             this.expiringBtn = new System.Windows.Forms.Button();
             this.criticalStockBtn = new System.Windows.Forms.Button();
-            this._UF = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this._Preço = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.UF = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Preço = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // openRegisterBtn
@@ -86,6 +87,17 @@
             // 
             this.Nome.Text = "Nome";
             this.Nome.Width = 440;
+            // 
+            // UF
+            // 
+            this.UF.Text = "UF";
+            this.UF.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // Preço
+            // 
+            this.Preço.DisplayIndex = 4;
+            this.Preço.Text = "Preço";
+            this.Preço.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // Validade
             // 
@@ -127,6 +139,16 @@
             // 
             this._Name.Text = "Nome";
             this._Name.Width = 442;
+            // 
+            // _UF
+            // 
+            this._UF.Text = "UF";
+            this._UF.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // _Preço
+            // 
+            this._Preço.Text = "Preço";
+            this._Preço.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // StockMin
             // 
@@ -211,31 +233,28 @@
             this.criticalStockBtn.UseVisualStyleBackColor = true;
             this.criticalStockBtn.Click += new System.EventHandler(this.criticalStockBtn_Click);
             // 
-            // _UF
+            // comboBox1
             // 
-            this._UF.Text = "UF";
-            this._UF.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // _Preço
-            // 
-            this._Preço.Text = "Preço";
-            this._Preço.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // UF
-            // 
-            this.UF.Text = "UF";
-            this.UF.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // Preço
-            // 
-            this.Preço.DisplayIndex = 4;
-            this.Preço.Text = "Preço";
-            this.Preço.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "1 MES (30)",
+            "2 MESES (60)",
+            "3 MESES (90)",
+            "4 MESES (120)",
+            "5 MESES (150)",
+            "6 MESES (180)"});
+            this.comboBox1.Location = new System.Drawing.Point(328, 239);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(69, 21);
+            this.comboBox1.TabIndex = 8;
+            this.comboBox1.Text = "Validade";
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // Main
             // 
             this.BackColor = System.Drawing.Color.PaleGreen;
             this.ClientSize = new System.Drawing.Size(1284, 701);
+            this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.criticalStockBtn);
             this.Controls.Add(this.expiringBtn);
             this.Controls.Add(this.sellFormBtn);
@@ -280,6 +299,7 @@
         private System.Windows.Forms.ColumnHeader Preço;
         private System.Windows.Forms.ColumnHeader _UF;
         private System.Windows.Forms.ColumnHeader _Preço;
+        private System.Windows.Forms.ComboBox comboBox1;
     }
 }
 

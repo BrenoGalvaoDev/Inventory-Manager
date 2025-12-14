@@ -55,6 +55,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.ufTB = new System.Windows.Forms.TextBox();
+            this.UF = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.amountNumericUpDown)).BeginInit();
             this.SuspendLayout();
@@ -63,6 +64,7 @@
             // 
             this.sellListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.NOME,
+            this.UF,
             this.QUANTIDADE});
             this.sellListView.ContextMenuStrip = this.contextMenuStrip1;
             this.sellListView.FullRowSelect = true;
@@ -78,7 +80,7 @@
             // NOME
             // 
             this.NOME.Text = "NOME";
-            this.NOME.Width = 500;
+            this.NOME.Width = 440;
             // 
             // QUANTIDADE
             // 
@@ -298,6 +300,11 @@
             this.ufTB.TabIndex = 22;
             this.ufTB.TabStop = false;
             // 
+            // UF
+            // 
+            this.UF.Text = "UF";
+            this.UF.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // SellForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -363,5 +370,6 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.TextBox ufTB;
+        private System.Windows.Forms.ColumnHeader UF;
     }
 }
